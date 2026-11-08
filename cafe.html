@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Касса кафе в Telegram — демо · shat.bot</title>
-<meta name="description" content="Интерактивное демо: официант принимает заказ кнопками в Telegram, кухня и бар получают карточки, касса закрывает стол, владелец получает отчёт.">
+<title>Cafe cash desk in Telegram — demo · shat.bot</title>
+<meta name="description" content="Interactive demo: the waiter takes orders with buttons in Telegram, the kitchen and bar get tickets, the cashier closes the table and the owner gets a report.">
 <link rel="canonical" href="https://shatlykos.github.io/cafe.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="shat.bot">
-<meta property="og:title" content="Касса кафе в Telegram — интерактивное демо">
-<meta property="og:description" content="Официант принимает заказ кнопками, кухня и бар получают карточки, касса закрывает стол, владелец получает отчёт.">
+<meta property="og:title" content="Cafe cash desk in Telegram — interactive demo">
+<meta property="og:description" content="The waiter takes orders with buttons, the kitchen and bar get tickets, the cashier closes the table, the owner gets a report.">
 <meta property="og:url" content="https://shatlykos.github.io/cafe.html">
 <!-- Google Analytics 4: сюда вставить код с ID вида G-XXXXXXXXXX -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -181,7 +181,7 @@ td.new { background: var(--spark-soft); }
 
 <div class="wrap">
   <div class="site">
-    <a class="logo" href="./">shat<span>.bot</span></a>
+    <a class="logo" id="logo" href="./">shat<span>.bot</span></a>
     <nav><a href="./#bots" id="nav-bots"></a><a class="cta-link" href="https://t.me/abdullah_shatlyk" id="nav-write"></a></nav>
   </div>
   <div class="top">
@@ -398,7 +398,7 @@ td.new { background: var(--spark-soft); }
     const h = (location.hash || "").slice(1);
     if (T[h]) return h;
     const nav = (navigator.language || "ru").slice(0, 2);
-    return nav === "ka" || nav === "en" ? nav : "ru";
+    return nav === "ka" || nav === "ru" ? nav : "en";
   }
 
   // ---------- помощники ----------
@@ -674,7 +674,8 @@ td.new { background: var(--spark-soft); }
     $("t-title").textContent = t("title");
     $("t-eyebrow").textContent = t("eyebrow");
     $("nav-bots").textContent = t("navBots");
-    $("nav-bots").href = lang === "en" ? "en/#bots" : "./#bots";
+    $("nav-bots").href = lang === "ru" ? "ru/#bots" : "./#bots";
+    $("logo").href = lang === "ru" ? "ru/" : "./";
     $("nav-write").textContent = t("navWrite");
     $("final-title").textContent = t("finalTitle");
     $("final-text").textContent = t("finalText");
