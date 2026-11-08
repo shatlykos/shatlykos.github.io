@@ -75,6 +75,7 @@ nav a{text-decoration:none;color:var(--muted);font-weight:600;margin-left:20px;f
 .chat{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 20px 50px -25px rgba(0,0,0,.25)}
 .chat-head{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:14px}
 .ava{width:38px;height:38px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800}
+.ava svg{width:20px;height:20px}
 .chat-head b{display:block;font-size:15px}
 .chat-head small{color:var(--muted);font-size:13px}
 .msg{max-width:85%;padding:10px 14px;border-radius:16px;font-size:15px;margin-bottom:8px}
@@ -101,7 +102,8 @@ nav a{text-decoration:none;color:var(--muted);font-weight:600;margin-left:20px;f
 .card .flow li:last-child{padding-bottom:0}
 .card .flow li::before{display:none}
 .card .flow li:not(:last-child)::after{content:"";position:absolute;left:21px;top:46px;bottom:4px;width:2px;background:var(--line)}
-.flow .ic{width:44px;height:44px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-size:20px}
+.flow .ic{width:44px;height:44px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;color:var(--accent)}
+.flow .ic svg{width:22px;height:22px}
 .flow b{display:block;font-size:15.5px}
 .flow span{color:var(--muted);font-size:14.5px}
 
@@ -122,7 +124,10 @@ section{padding:64px 0}
 @media(max-width:760px){.cards{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
-.icon{font-size:32px;line-height:1}
+.icon{width:48px;height:48px;border-radius:14px;background:var(--tag);color:var(--accent);display:grid;place-items:center}
+.icon svg{width:26px;height:26px}
+.offer{display:flex;gap:12px;align-items:center}
+.offer svg{width:24px;height:24px;flex:none}
 .badge{font-size:12px;font-weight:800;padding:5px 10px;border-radius:999px;background:var(--tag);color:var(--tag-ink);white-space:nowrap}
 .badge.soon{background:var(--soon);color:var(--soon-ink)}
 .card h3{font-size:24px;margin-bottom:6px}
@@ -188,7 +193,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
     </div>
     <div class="chat">
       <div class="chat-head">
-        <div class="ava" aria-hidden="true">☕</div>
+        <div class="ava" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"/><path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"/><path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"/></svg></div>
         <div><b>Касса кафе</b><small>официант Нино · стол 4</small></div>
       </div>
       <div class="msg bot">Стол 4 · в заказе:
@@ -221,7 +226,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
 
       <article class="card feature">
         <div class="left">
-          <div class="card-top"><span class="icon">☕</span><span class="badge new">Новое</span></div>
+          <div class="card-top"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1"/><path d="M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5z"/><path d="M16.746 16.726a3 3 0 1 0 .252 -5.555"/></svg></span><span class="badge new">Новое</span></div>
           <h3>Касса для кафе в Telegram</h3>
           <p class="for">Для кафе, кофеен, ресторанов и баров. Вместо бумажных чеков и криков на кухню — кнопки в телефоне.</p>
           <ul>
@@ -237,15 +242,15 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
           </div>
         </div>
         <ol class="flow" aria-label="Как проходит заказ">
-          <li><span class="ic" aria-hidden="true">📝</span><div><b>Официант</b><span>Выбирает стол и блюда, нажимает «Отправить»</span></div></li>
-          <li><span class="ic" aria-hidden="true">🍳</span><div><b>Кухня и бар</b><span>Получают карточку, жмут «Принял» и «Готово» — официант сразу знает</span></div></li>
-          <li><span class="ic" aria-hidden="true">💰</span><div><b>Касса</b><span>Видит, кто просит счёт, закрывает стол: наличные, карта или перевод</span></div></li>
-          <li><span class="ic" aria-hidden="true">📊</span><div><b>Владелец</b><span>Вечером получает выручку, отмены и топ блюд — в Telegram и в таблице</span></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"/><path d="M9 7h6"/><path d="M9 11h6"/><path d="M9 15h4"/></svg></span><div><b>Официант</b><span>Выбирает стол и блюда, нажимает «Отправить»</span></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1.918 0 3.52 1.35 3.91 3.151a4 4 0 0 1 2.09 7.723v7.126h-12v-7.126a4 4 0 1 1 2.092 -7.723a4 4 0 0 1 3.908 -3.151z"/><path d="M6.161 17.009l11.839 -.009"/></svg></span><div><b>Кухня и бар</b><span>Получают карточку, жмут «Принял» и «Готово» — официант сразу знает</span></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"/></svg></span><div><b>Касса</b><span>Видит, кто просит счёт, закрывает стол: наличные, карта или перевод</span></div></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 20h14"/></svg></span><div><b>Владелец</b><span>Вечером получает выручку, отмены и топ блюд — в Telegram и в таблице</span></div></li>
         </ol>
       </article>
 
       <article class="card">
-        <div class="card-top"><span class="icon">📇</span><span class="badge">Работает</span></div>
+        <div class="card-top"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"/><path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 8h2"/><path d="M15 12h2"/><path d="M7 16h10"/></svg></span><span class="badge">Работает</span></div>
         <h3>Бот визиток для сообществ</h3>
         <p class="for">Для владельцев чатов предпринимателей, экспатов, профессиональных клубов</p>
         <ul>
@@ -259,7 +264,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
       </article>
 
       <article class="card">
-        <div class="card-top"><span class="icon">🍱</span><span class="badge">Работает</span></div>
+        <div class="card-top"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z"/><path d="M12 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M16 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/><path d="M8 4a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2"/></svg></span><span class="badge">Работает</span></div>
         <h3>Заказ обедов — School Lunch</h3>
         <p class="for">Для школ, столовых, кейтеринга, доставки еды</p>
         <ul>
@@ -273,7 +278,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
       </article>
 
       <article class="card">
-        <div class="card-top"><span class="icon">📅</span><span class="badge">Работает</span></div>
+        <div class="card-top"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/><path d="M8 15h2v2h-2z"/></svg></span><span class="badge">Работает</span></div>
         <h3>Бронирование помещений и мероприятий</h3>
         <p class="for">Для коворкингов, студий, кафе, залов, психологов и наставников</p>
         <ul>
@@ -287,7 +292,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
       </article>
 
       <article class="card">
-        <div class="card-top"><span class="icon">🚗</span><span class="badge soon">Скоро</span></div>
+        <div class="card-top"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5"/></svg></span><span class="badge soon">Скоро</span></div>
         <h3>Аренда авто</h3>
         <p class="for">Для прокатов автомобилей, скутеров, велосипедов</p>
         <ul>
@@ -301,7 +306,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
       </article>
 
       <article class="card">
-        <div class="card-top"><span class="icon">🔗</span><span class="badge">Работает</span></div>
+        <div class="card-top"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 15l6 -6"/><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464"/><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463"/></svg></span><span class="badge">Работает</span></div>
         <h3>Синхронизация с сайтом на Tilda</h3>
         <p class="for">Для интернет-магазинов и каталогов</p>
         <ul>
@@ -313,7 +318,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
       </article>
 
       <article class="card">
-        <div class="card-top"><span class="icon">✨</span><span class="badge">Под задачу</span></div>
+        <div class="card-top"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/></svg></span><span class="badge">Под задачу</span></div>
         <h3>Ваш бот</h3>
         <p class="for">Не нашли подходящее? Расскажите, где у вас уходит время</p>
         <ul>
@@ -357,7 +362,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
       <div class="row"><div><b>Бот визиток для сообщества</b><small>настройка под ваш чат</small></div><div class="p">от $200 + $20/мес</div></div>
       <div class="row"><div><b>Поддержка и доработки</b><small>любой бот, мой или чужой</small></div><div class="p">от $20/мес</div></div>
     </div>
-    <div class="offer">🎁 Первым 5 клиентам — скидка 30% в обмен на честный отзыв.</div>
+    <div class="offer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5"/></svg><span>Первым 5 клиентам — скидка 30% в обмен на честный отзыв.</span></div>
   </div>
 </section>
 
