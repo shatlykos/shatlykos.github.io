@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Абдулла — Telegram-боты для бизнеса</title>
-<meta name="description" content="Telegram-боты и автоматизация для малого бизнеса: запись клиентов, заказы, бронирование, визитки для сообществ. Google Таблицы, Календарь, Tilda.">
+<meta name="description" content="Telegram-боты и автоматизация для малого бизнеса: касса для кафе, запись клиентов, заказы, бронирование, визитки для сообществ. Google Таблицы, Календарь, Tilda.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -65,6 +65,28 @@ nav a{text-decoration:none;color:var(--muted);font-weight:600;margin-left:20px;f
 .msg.me{background:var(--accent);color:var(--accent-ink);margin-left:auto;border-bottom-right-radius:4px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
 .chips span{border:1.5px solid var(--accent);color:var(--accent);border-radius:10px;padding:5px 10px;font-size:13px;font-weight:700}
+
+.chat .msg.bot{white-space:pre-line}
+.chat .chips span.on{background:var(--accent);color:var(--accent-ink)}
+.chat-note{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.chat-note a{color:var(--accent);font-weight:700;text-decoration:none;white-space:nowrap}
+
+/* featured: касса кафе */
+.card.feature{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:30px;border-color:var(--accent)}
+@media(max-width:760px){.card.feature{grid-template-columns:1fr;padding:24px}}
+.feature .badge.new{background:var(--accent);color:var(--accent-ink)}
+.feature h3{font-size:24px}
+.feature .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
+.feature .actions .btn{padding:12px 18px;font-size:15px}
+.feature .left{display:flex;flex-direction:column;min-width:0}
+.flow{list-style:none;display:grid;gap:0;align-content:start;align-self:start;background:var(--bg);border-radius:18px;padding:18px}
+.card .flow li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;position:relative;padding:0 0 18px;margin:0;font-size:15px}
+.card .flow li:last-child{padding-bottom:0}
+.card .flow li::before{display:none}
+.card .flow li:not(:last-child)::after{content:"";position:absolute;left:21px;top:46px;bottom:4px;width:2px;background:var(--line)}
+.flow .ic{width:44px;height:44px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-size:20px}
+.flow b{display:block;font-size:15.5px}
+.flow span{color:var(--muted);font-size:14.5px}
 
 /* sections */
 section{padding:64px 0}
@@ -140,23 +162,25 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
     <div>
       <span class="eyebrow">Telegram-боты и автоматизация</span>
       <h1>Бот, который делает <em>рутину</em> за вас</h1>
-      <p class="lead">Запись клиентов, заказы, бронирование и отчёты — сами, круглосуточно, без таблиц вручную и переписки в WhatsApp. Я сам владелец малого бизнеса и знаю, где уходит время.</p>
+      <p class="lead">Заказы в кафе, запись клиентов, бронирование и отчёты — сами, круглосуточно, без таблиц вручную и переписки в WhatsApp. Я сам владелец малого бизнеса и знаю, где уходит время.</p>
       <div class="actions">
         <a class="btn btn-main" href="https://t.me/abdullah_shatlyk">Обсудить задачу в Telegram</a>
         <a class="btn btn-ghost" href="#bots">Посмотреть ботов</a>
       </div>
     </div>
-    <div class="chat" aria-hidden="true">
+    <div class="chat">
       <div class="chat-head">
-        <div class="ava">🤖</div>
-        <div><b>Бот записи</b><small>онлайн</small></div>
+        <div class="ava" aria-hidden="true">☕</div>
+        <div><b>Касса кафе</b><small>официант Нино · стол 4</small></div>
       </div>
-      <div class="msg bot">Здравствуйте! На какой день хотите записаться?</div>
-      <div class="chips"><span>Завтра</span><span>Пт, 14</span><span>Сб, 15</span></div>
-      <div class="msg me">Завтра</div>
-      <div class="msg bot">Свободно: 11:00, 14:30, 17:00</div>
-      <div class="msg me">14:30</div>
-      <div class="msg bot">Готово ✅ Напомню за 24 и за 2 часа.</div>
+      <div class="msg bot">Стол 4 · в заказе:
+2× Плов — 40 ₾
+1× Капучино — 6 ₾</div>
+      <div class="chips" aria-hidden="true"><span class="on">✅ Отправить</span><span>💬 Комментарий</span></div>
+      <div class="msg bot">Ушло на кухню 🍳 и в бар ☕</div>
+      <div class="msg bot">🔔 Кухня: плов готов — можно нести</div>
+      <div class="msg bot">✅ Стол 4 оплачен · 46 ₾ · 💳 карта</div>
+      <div class="chat-note"><span>Кухня, касса и вечерний отчёт — сами</span><a href="cafe.html">Нажать самому →</a></div>
     </div>
   </div>
 </div>
@@ -176,6 +200,31 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
       <p>Большинство ботов уже работает в реальном деле. Настрою такой же под ваш бизнес или сделаю новый.</p>
     </div>
     <div class="cards">
+
+      <article class="card feature">
+        <div class="left">
+          <div class="card-top"><span class="icon">☕</span><span class="badge new">Новое</span></div>
+          <h3>Касса для кафе в Telegram</h3>
+          <p class="for">Для кафе, кофеен, ресторанов и баров. Вместо бумажных чеков и криков на кухню — кнопки в телефоне.</p>
+          <ul>
+            <li>Официант собирает заказ кнопками, стол и блюда — за пару касаний</li>
+            <li>Еда сама уходит на кухню, напитки — в бар</li>
+            <li>Стоп-лист, дозаказ, отмена с причиной</li>
+            <li>Меню и отчёты в Google Таблице, русский, грузинский и английский</li>
+          </ul>
+          <div class="stack"><span>Telegram</span><span>Google Таблицы</span><span>3 языка</span></div>
+          <div class="actions">
+            <a class="btn btn-main" href="cafe.html">Попробовать демо →</a>
+            <a class="btn btn-ghost" href="https://t.me/abdullah_shatlyk">Обсудить</a>
+          </div>
+        </div>
+        <ol class="flow" aria-label="Как проходит заказ">
+          <li><span class="ic" aria-hidden="true">📝</span><div><b>Официант</b><span>Выбирает стол и блюда, нажимает «Отправить»</span></div></li>
+          <li><span class="ic" aria-hidden="true">🍳</span><div><b>Кухня и бар</b><span>Получают карточку, жмут «Принял» и «Готово» — официант сразу знает</span></div></li>
+          <li><span class="ic" aria-hidden="true">💰</span><div><b>Касса</b><span>Видит, кто просит счёт, закрывает стол: наличные, карта или перевод</span></div></li>
+          <li><span class="ic" aria-hidden="true">📊</span><div><b>Владелец</b><span>Вечером получает выручку, отмены и топ блюд — в Telegram и в таблице</span></div></li>
+        </ol>
+      </article>
 
       <article class="card">
         <div class="card-top"><span class="icon">📇</span><span class="badge">Работает</span></div>

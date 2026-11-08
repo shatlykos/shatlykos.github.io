@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Касса кафе в Telegram — демо · shat.bot</title>
+<meta name="description" content="Интерактивное демо: официант принимает заказ кнопками в Telegram, кухня и бар получают карточки, касса закрывает стол, владелец получает отчёт.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&family=Noto+Sans+Georgian:wght@400;500;700&display=swap">
+<style>
+/* Layout: brand line + live hint on top, four chat phones side by side (tabs on a phone), owner's evening report below. */
+/* Layout: site header, live hint, four chat phones side by side (tabs on a phone), owner's report, call to action. Colors and fonts follow shat.bot. */
+:root {
+  --bg: #f6f4ef;
+  --ink: #16181d;
+  --muted: #5d6370;
+  --line: #e4e0d6;
+  --accent: #2a6df4;
+  --accent-ink: #ffffff;
+  --spark: #ff7a45;
+  --spark-ink: #2a1205;
+  --spark-soft: #fff1e8;
+  --spark-text: #b4541f;
+  --phone: #ffffff;
+  --chat: #eef1f6;
+  --bub-in: #ffffff;
+  --bub-out: #dbe7ff;
+  --key: #f1f3f8;
+  --key-ink: #2a4fb0;
+  --tag: #eef3ff;
+  --shadow: 0 20px 50px -25px rgba(0, 0, 0, .25);
+  --font-display: "Unbounded", "Noto Sans Georgian", Manrope, system-ui, sans-serif;
+  --font-body: Manrope, "Noto Sans Georgian", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111317; --ink: #f1f2f4; --muted: #a2a8b4; --line: #2b2f37;
+    --accent: #5b8cff; --accent-ink: #0b0d12; --spark: #ff8b5c; --spark-ink: #2a1205; --spark-soft: #3a2418; --spark-text: #ffb48c;
+    --phone: #1a1d23; --chat: #14171c; --bub-in: #222631; --bub-out: #24375f;
+    --key: #232833; --key-ink: #a9c0ff; --tag: #1f2a44; --shadow: 0 20px 50px -25px rgba(0, 0, 0, .6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111317; --ink: #f1f2f4; --muted: #a2a8b4; --line: #2b2f37;
+  --accent: #5b8cff; --accent-ink: #0b0d12; --spark: #ff8b5c; --spark-ink: #2a1205; --spark-soft: #3a2418; --spark-text: #ffb48c;
+  --phone: #1a1d23; --chat: #14171c; --bub-in: #222631; --bub-out: #24375f;
+  --key: #232833; --key-ink: #a9c0ff; --tag: #1f2a44; --shadow: 0 20px 50px -25px rgba(0, 0, 0, .6);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--ink); font: 15px/1.45 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 48px;
+}
+.wrap { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---------- top ---------- */
+.top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; }
+.site { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.logo { font: 700 18px/1 var(--font-display); text-decoration: none; color: var(--ink); }
+.logo span { color: var(--accent); }
+.site nav { display: flex; gap: 18px; align-items: center; }
+.site nav a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 15px; }
+.site nav a.cta-link { color: var(--accent); }
+.eyebrow { display: inline-block; background: var(--tag); color: var(--key-ink); padding: 6px 12px; border-radius: 999px; font-weight: 700; font-size: 13px; margin-bottom: 12px; }
+.final { background: var(--ink); color: var(--bg); border-radius: 28px; padding: 40px 24px; text-align: center; display: grid; gap: 12px; justify-items: center; }
+.final h2 { font: 700 clamp(22px, 3.4vw, 34px)/1.15 var(--font-display); margin: 0; text-wrap: balance; }
+.final p { margin: 0; opacity: .75; max-width: 52ch; }
+.btn-main { display: inline-flex; padding: 14px 22px; border-radius: 999px; font-weight: 700; text-decoration: none; background: var(--accent); color: var(--accent-ink); }
+.brand h1 { font: 700 clamp(24px, 4vw, 36px)/1.1 var(--font-display); margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+.brand { min-width: 0; }
+.brand p { margin: 6px 0 0; color: var(--muted); max-width: 62ch; }
+.controls { display: flex; gap: 8px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--phone); }
+.seg button { border: 0; background: none; padding: 6px 12px; border-radius: 999px; font-weight: 600; font-size: 13px; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.ghost { border: 1px solid var(--line); background: var(--phone); border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 600; }
+
+/* ---------- hint ---------- */
+.hint {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+  background: var(--spark-soft); border-radius: 14px; padding: 12px 16px;
+}
+.hint .step { font: 600 11px/1 var(--font-display); letter-spacing: .08em; text-transform: uppercase; color: var(--spark-text); white-space: nowrap; }
+.hint .text { flex: 1 1 280px; min-width: 0; font-weight: 500; }
+.hint button { border: 0; background: var(--spark); color: var(--spark-ink); border-radius: 999px; padding: 7px 14px; font-weight: 600; font-size: 13px; }
+
+/* ---------- phones ---------- */
+.tabs { display: none; gap: 6px; flex-wrap: wrap; }
+.tabs button { position: relative; border: 1px solid var(--line); background: var(--phone); border-radius: 999px; padding: 7px 12px; font-size: 13px; font-weight: 600; }
+.tabs button[aria-selected="true"] { border-color: var(--accent); color: var(--accent); }
+.badge { position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--spark); color: var(--spark-ink); font-size: 11px; line-height: 18px; text-align: center; }
+.stage { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.phone {
+  background: var(--phone); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); overflow: hidden;
+  display: grid; grid-template-rows: auto 1fr auto; height: 600px; min-width: 0;
+  outline: 2px solid transparent; transition: outline-color .2s;
+}
+.phone.is-target { outline-color: var(--spark); }
+.phone header { display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.ava { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 17px; background: var(--chat); flex: none; }
+.phone header b { display: block; font-size: 14px; }
+.phone header small { color: var(--muted); font-size: 12px; }
+.chat { background: var(--chat); overflow-y: auto; padding: 12px 10px; display: flex; flex-direction: column; gap: 6px; scroll-behavior: smooth; }
+.msg { max-width: 92%; display: grid; gap: 4px; }
+.msg.me { align-self: flex-end; }
+.bubble { background: var(--bub-in); border-radius: 14px 14px 14px 4px; padding: 7px 10px 6px; white-space: pre-line; font-size: 13.5px; line-height: 1.4; overflow-wrap: anywhere; }
+.me .bubble { background: var(--bub-out); border-radius: 14px 14px 4px 14px; }
+.bubble time { float: right; margin: 6px 0 -2px 10px; font-size: 10.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.bubble b { font-weight: 600; }
+.keys { display: grid; gap: 4px; }
+.keys .row { display: flex; gap: 4px; }
+.keys button {
+  flex: 1 1 0; min-width: 0; border: 0; border-radius: 9px; padding: 7px 6px; font-size: 12.5px; font-weight: 500;
+  background: color-mix(in srgb, var(--bub-in) 70%, transparent); color: var(--key-ink);
+  line-height: 1.25; overflow-wrap: anywhere;
+}
+.keys button:hover { background: var(--bub-in); }
+.keys button.pick { animation: pulse 1.6s ease-in-out infinite; box-shadow: inset 0 0 0 2px var(--spark); }
+@keyframes pulse { 50% { box-shadow: inset 0 0 0 2px transparent; } }
+.dock { border-top: 1px solid var(--line); padding: 8px; display: grid; gap: 6px; }
+.dock-keys { display: grid; gap: 6px; }
+.dock .row { display: flex; gap: 6px; }
+.dock button { flex: 1 1 0; min-width: 0; border: 0; background: var(--key); border-radius: 10px; padding: 9px 6px; font-size: 12.5px; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
+.dock button.pick { box-shadow: inset 0 0 0 2px var(--spark); animation: pulse 1.6s ease-in-out infinite; }
+.dock .group-note { text-align: center; color: var(--muted); font-size: 12px; padding: 8px 4px; }
+.sys { align-self: center; font-size: 11.5px; color: var(--muted); background: color-mix(in srgb, var(--bub-in) 60%, transparent); padding: 3px 10px; border-radius: 999px; }
+
+/* ---------- owner report ---------- */
+.owner { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 14px; align-items: start; }
+.owner .phone { height: auto; }
+.owner .chat { min-height: 150px; }
+.sheet { background: var(--phone); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 14px; min-width: 0; display: grid; gap: 10px; }
+.sheet h3, .owner-title { font: 600 13px/1.2 var(--font-display); margin: 0; letter-spacing: .02em; }
+.tabs-sheet { display: flex; gap: 4px; flex-wrap: wrap; font-size: 12px; }
+.tabs-sheet span { padding: 4px 9px; border-radius: 6px 6px 0 0; background: var(--chat); color: var(--muted); }
+.tabs-sheet span.on { background: var(--accent); color: var(--accent-ink); }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; min-width: 640px; }
+th, td { border: 1px solid var(--line); padding: 5px 8px; text-align: left; white-space: nowrap; }
+th { background: var(--chat); font-weight: 600; }
+td.new { background: var(--spark-soft); }
+.example { color: var(--muted); font-size: 12px; }
+
+/* ---------- features ---------- */
+.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 28px; padding-top: 4px; }
+.features div { display: grid; gap: 2px; align-content: start; }
+.features b { font-weight: 600; }
+.features span { color: var(--muted); font-size: 14px; }
+
+@media (max-width: 1100px) { .stage, .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) {
+  .tabs { display: flex; }
+  .stage, .features { grid-template-columns: minmax(0, 1fr); }
+  .stage .phone:not(.active) { display: none; }
+  .phone { height: 560px; }
+  .owner { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .keys button.pick, .dock button.pick { animation: none; }
+  .chat { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="site">
+    <a class="logo" href="./">shat<span>.bot</span></a>
+    <nav><a href="./#bots" id="nav-bots"></a><a class="cta-link" href="https://t.me/abdullah_shatlyk" id="nav-write"></a></nav>
+  </div>
+  <div class="top">
+    <div class="brand">
+      <span class="eyebrow" id="t-eyebrow"></span>
+      <h1 id="t-title"></h1>
+      <p id="t-sub"></p>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Language">
+        <button id="lang-ru" data-lang="ru">RU</button>
+        <button id="lang-ka" data-lang="ka">KA</button>
+        <button id="lang-en" data-lang="en">EN</button>
+      </div>
+      <button class="ghost" id="reset"></button>
+    </div>
+  </div>
+
+  <div class="hint" aria-live="polite">
+    <span class="step" id="hint-step"></span>
+    <span class="text" id="hint-text"></span>
+    <button id="hint-go" hidden></button>
+  </div>
+
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="stage" id="stage"></div>
+
+  <section class="owner" id="owner" hidden>
+    <div class="phone" id="phone-owner"></div>
+    <div class="sheet">
+      <h3 id="sheet-title"></h3>
+      <div class="tabs-sheet" id="sheet-tabs"></div>
+      <div class="scroll" id="sheet-table"></div>
+      <div class="example" id="sheet-note"></div>
+    </div>
+  </section>
+
+  <div class="features" id="features"></div>
+
+  <div class="final">
+    <h2 id="final-title"></h2>
+    <p id="final-text"></p>
+    <a class="btn-main" href="https://t.me/abdullah_shatlyk" id="final-btn"></a>
+  </div>
+</div>
+
+<script>
+(() => {
+  // ---------- данные демо ----------
+  const MENU = [
+    { id: "plov",   cat: "food",   st: "kitchen", price: 20, ru: "Плов",          ka: "ფლავი",     en: "Plov" },
+    { id: "manti",  cat: "food",   st: "kitchen", price: 22, ru: "Манты",         ka: "მანტი",     en: "Manti" },
+    { id: "fitchi", cat: "food",   st: "kitchen", price: 20, ru: "Пироги Фитчи",  ka: "ფიტჩი",     en: "Fitchi Pie" },
+    { id: "capp",   cat: "drinks", st: "bar",     price: 6,  ru: "Капучино",      ka: "კაპუჩინო",  en: "Cappuccino" },
+    { id: "latte",  cat: "drinks", st: "bar",     price: 8,  ru: "Латте",         ka: "ლატე",      en: "Latte" },
+    { id: "tea",    cat: "drinks", st: "bar",     price: 2,  ru: "Чай чёрный",    ka: "შავი ჩაი",  en: "Black tea" },
+  ];
+  const CATS = { food: { ru: "Еда", ka: "საჭმელი", en: "Food" }, drinks: { ru: "Напитки", ka: "სასმელები", en: "Drinks" } };
+  const ICON = { kitchen: "🍳", bar: "☕" };
+  const TABLES = 8;
+  const BUSY = [2, 6]; // другие официанты уже работают за этими столами
+
+  // Тексты бота взяты из texts.py, остальное — подписи демо-страницы.
+  const T = {
+    ru: {
+      eyebrow: "Демо · Касса кафе", navBots: "Боты", navWrite: "Написать →", finalTitle: "Хотите такую кассу в своём кафе?", finalText: "Настрою под ваше меню, столы и команду. Напишите в Telegram — покажу на вашем меню.", finalBtn: "Обсудить в Telegram",
+      title: "Касса в Telegram",
+      sub: "Официант принимает заказ кнопками, кухня и бар получают карточки, касса закрывает стол, владелец вечером видит итоги. Нажимайте кнопки в чатах — всё работает как в настоящем боте.",
+      reset: "Начать заново", step: "Шаг {n} из 6", done: "Готово",
+      w: "Официант", wSub: "бот кофейни · Нино", k: "Кухня", kSub: "группа · повар", b: "Бар", bSub: "группа · бариста",
+      c: "Касса", cSub: "бот кофейни · Кети", o: "Владелец", oSub: "бот кофейни · 23:30", groupNote: "Повар нажимает кнопки на карточке",
+      waiterName: "Нино", cafe: "Арома",
+      "btn.new_order": "➕ Новый заказ", "btn.my_tables": "📋 Мои столы", "btn.open_checks": "🧾 Открытые столы", "btn.shift_now": "📊 Смена сейчас",
+      "btn.takeaway": "🥡 На вынос", "btn.send": "✅ Отправить", "btn.cancel": "✖ Отмена", "btn.accept": "👌 Принял", "btn.ready": "✅ Готово",
+      "btn.paid": "💰 Оплачено", "btn.cancel_item": "❌ Отменить позицию", "btn.back": "⬅ Назад", "btn.refresh": "🔄 Обновить",
+      choose_table: "Выбери стол:", "cart.title": "{place} · сейчас в заказе:", "cart.empty": "Корзина пуста", "cart.choose_category": "Выбери категорию:",
+      "cart.cancelled": "Заказ отменён.", table: "Стол {n}", takeaway: "На вынос",
+      "order.sent": "✅ {place} · #{number} отправлен", "ticket.accepted": "👌 принято в {time}", "ticket.ready": "готово в {time} ({min} мин)",
+      "notify.accepted": "👌 {place}: {station} приняла заказ", "notify.ready": "🔔 {place}: {station} готово — {items}",
+      "tables.line": "{place} · #{number} · {sum} · открыт {time}", "tables.none": "Открытых столов нет.",
+      "status.new": "ждёт", "status.accepted": "готовится", "status.ready": "готово",
+      "bill.title": "🧾 {place} · #{number} · официант {waiter}", "bill.total": "Итого", "bill.requested": "Кассе отправлен сигнал, что гость просит счёт.",
+      "notify.bill": "🔔 {place} просит счёт · {sum} · {waiter}", "kassa.title": "Открытые столы (🔔 — просят счёт):",
+      "pay.how": "Как оплатили {sum}?", "pay.cash": "💵 Наличные", "pay.card": "💳 Карта", "pay.transfer": "📲 Перевод",
+      "pay.done": "✅ {place} закрыт · {sum}", "shift": "📊 Сегодня {sum} · {n} чеков\n💵 {cash}  💳 {card}  📲 {transfer}\nОткрыто столов: {open}",
+      "report.title": "📊 {cafe} · {date}", "report.revenue": "Выручка: {sum} · {n} чеков · средний {avg}",
+      "report.cancels": "Отмены: {n} на {sum} (из них потери {lost})", "report.top": "Топ: {items}", "report.sheet_ok": "📄 Записано в Google Таблицу.",
+      kitchen: "Кухня", bar: "Бар", onlyOne: "В демо один заказ. Нажмите «Начать заново», чтобы пройти ещё раз.",
+      h1: "Официант: нажмите «➕ Новый заказ».", h2: "Выберите стол. Точкой отмечены занятые.",
+      h3: "Выберите категорию и добавьте блюда и напитки.", h3b: "Добавьте ещё или нажмите «✅ Отправить». Еда уйдёт на кухню, напитки — в бар.",
+      h4: "{station}: нажмите «👌 Принял», потом «✅ Готово». Официанту придёт уведомление.",
+      h5: "Официант: «📋 Мои столы» → «🧾 Стол {n}», когда гость просит счёт.",
+      h6: "Касса: «🧾 Открытые столы» → стол → «💰 Оплачено» → способ оплаты.",
+      h7: "Стол закрыт. Вечером владелец получает итоги дня и таблицу.", h8: "Это весь путь заказа. Можно пройти его ещё раз на другом языке.",
+      open: "Открыть: {name}", showReport: "Перемотать к 23:30",
+      sheetTitle: "Google Таблица кофейни", sheetNote: "Пример: в итоги добавлены другие заказы за день. Подсвечен заказ из демо.",
+      sheetTabs: ["Итоги дня", "Чеки", "Отмены", "По официантам"],
+      sheetHead: ["Дата", "№ чека", "Стол", "Официант", "Открыт", "Оплачен", "Способ", "Сумма, ₾", "Позиции"],
+      methods: { cash: "Наличные", card: "Карта", transfer: "Перевод" },
+      features: [
+        ["Дозаказ", "Тот же стол, новая карточка с пометкой ДОЗАКАЗ."],
+        ["Стоп-лист", "Кухня одной кнопкой снимает блюдо, официант его больше не видит."],
+        ["Отмена с причиной", "Касса отменяет позицию, кухня и официант сразу узнают. Готовое блюдо — в потери."],
+        ["Меню в Google Таблице", "Владелец правит цены в таблице, бот подтягивает их командой."],
+        ["Три языка", "Русский, грузинский и английский. У каждого сотрудника свой."],
+        ["Без кассового железа", "Работает в Telegram на телефонах, которые уже есть у команды."],
+      ],
+    },
+    ka: {
+      eyebrow: "დემო · კაფის სალარო", navBots: "ბოტები", navWrite: "მოწერა →", finalTitle: "გინდათ ასეთი სალარო თქვენს კაფეში?", finalText: "მოვარგებ თქვენს მენიუს, მაგიდებს და გუნდს. მომწერეთ Telegram-ში — ვაჩვენებ თქვენს მენიუზე.", finalBtn: "Telegram-ში განხილვა",
+      title: "სალარო Telegram-ში",
+      sub: "მიმტანი შეკვეთას ღილაკებით იღებს, სამზარეულო და ბარი ბარათებს იღებენ, მოლარე მაგიდას ხურავს, მფლობელი საღამოს შედეგებს ხედავს. დააჭირეთ ღილაკებს ჩატებში — ყველაფერი ისე მუშაობს, როგორც ნამდვილ ბოტში.",
+      reset: "თავიდან დაწყება", step: "ნაბიჯი {n} / 6", done: "მზადაა",
+      w: "მიმტანი", wSub: "კაფის ბოტი · ნინო", k: "სამზარეულო", kSub: "ჯგუფი · მზარეული", b: "ბარი", bSub: "ჯგუფი · ბარისტა",
+      c: "სალარო", cSub: "კაფის ბოტი · ქეთი", o: "მფლობელი", oSub: "კაფის ბოტი · 23:30", groupNote: "მზარეული ბარათზე ღილაკებს აჭერს",
+      waiterName: "ნინო", cafe: "არომა",
+      "btn.new_order": "➕ ახალი შეკვეთა", "btn.my_tables": "📋 ჩემი მაგიდები", "btn.open_checks": "🧾 ღია მაგიდები", "btn.shift_now": "📊 ცვლა ახლა",
+      "btn.takeaway": "🥡 წასაღები", "btn.send": "✅ გაგზავნა", "btn.cancel": "✖ გაუქმება", "btn.accept": "👌 მივიღე", "btn.ready": "✅ მზადაა",
+      "btn.paid": "💰 გადახდილია", "btn.cancel_item": "❌ პოზიციის გაუქმება", "btn.back": "⬅ უკან", "btn.refresh": "🔄 განახლება",
+      choose_table: "აირჩიე მაგიდა:", "cart.title": "{place} · შეკვეთაში:", "cart.empty": "კალათა ცარიელია", "cart.choose_category": "აირჩიე კატეგორია:",
+      "cart.cancelled": "შეკვეთა გაუქმდა.", table: "მაგიდა {n}", takeaway: "წასაღები",
+      "order.sent": "✅ {place} · #{number} გაიგზავნა", "ticket.accepted": "👌 მიღებულია {time}", "ticket.ready": "მზადაა {time} ({min} წთ)",
+      "notify.accepted": "👌 {place}: {station} — შეკვეთა მიღებულია", "notify.ready": "🔔 {place}: {station} მზადაა — {items}",
+      "tables.line": "{place} · #{number} · {sum} · გაიხსნა {time}", "tables.none": "ღია მაგიდები არ არის.",
+      "status.new": "ელოდება", "status.accepted": "მზადდება", "status.ready": "მზადაა",
+      "bill.title": "🧾 {place} · #{number} · მიმტანი {waiter}", "bill.total": "სულ", "bill.requested": "მოლარეს ეცნობა, რომ სტუმარი ანგარიშს ითხოვს.",
+      "notify.bill": "🔔 {place} ითხოვს ანგარიშს · {sum} · {waiter}", "kassa.title": "ღია მაგიდები (🔔 — ანგარიშს ითხოვენ):",
+      "pay.how": "როგორ გადაიხადეს {sum}?", "pay.cash": "💵 ნაღდი", "pay.card": "💳 ბარათი", "pay.transfer": "📲 გადარიცხვა",
+      "pay.done": "✅ {place} დაიხურა · {sum}", "shift": "📊 დღეს {sum} · {n} ჩეკი\n💵 {cash}  💳 {card}  📲 {transfer}\nღია მაგიდები: {open}",
+      "report.title": "📊 {cafe} · {date}", "report.revenue": "შემოსავალი: {sum} · {n} ჩეკი · საშუალო {avg}",
+      "report.cancels": "გაუქმებები: {n}, {sum} (მათ შორის დანაკარგი {lost})", "report.top": "ტოპ: {items}", "report.sheet_ok": "📄 ჩაიწერა Google ცხრილში.",
+      kitchen: "სამზარეულო", bar: "ბარი", onlyOne: "დემოში ერთი შეკვეთაა. დააჭირეთ «თავიდან დაწყება», რომ კიდევ ერთხელ გაიაროთ.",
+      h1: "მიმტანი: დააჭირეთ «➕ ახალი შეკვეთა».", h2: "აირჩიეთ მაგიდა. წერტილით დაკავებულებია მონიშნული.",
+      h3: "აირჩიეთ კატეგორია და დაამატეთ კერძები და სასმელები.", h3b: "დაამატეთ კიდევ ან დააჭირეთ «✅ გაგზავნა». საჭმელი სამზარეულოში წავა, სასმელი — ბარში.",
+      h4: "{station}: დააჭირეთ «👌 მივიღე», შემდეგ «✅ მზადაა». მიმტანი შეტყობინებას მიიღებს.",
+      h5: "მიმტანი: «📋 ჩემი მაგიდები» → «🧾 მაგიდა {n}», როცა სტუმარი ანგარიშს ითხოვს.",
+      h6: "სალარო: «🧾 ღია მაგიდები» → მაგიდა → «💰 გადახდილია» → გადახდის ხერხი.",
+      h7: "მაგიდა დაიხურა. საღამოს მფლობელი დღის შედეგებს და ცხრილს იღებს.", h8: "ეს არის შეკვეთის მთელი გზა. შეგიძლიათ თავიდან გაიაროთ სხვა ენაზე.",
+      open: "გახსნა: {name}", showReport: "გადახვევა 23:30-ზე",
+      sheetTitle: "კაფის Google ცხრილი", sheetNote: "მაგალითი: შედეგებში დამატებულია დღის სხვა შეკვეთებიც. მონიშნულია დემოს შეკვეთა.",
+      sheetTabs: ["Daily totals", "Checks", "Cancellations", "By waiter"],
+      sheetHead: ["Date", "Check #", "Table", "Waiter", "Opened", "Paid", "Method", "Total, ₾", "Items"],
+      methods: { cash: "Cash", card: "Card", transfer: "Transfer" },
+      features: [
+        ["დამატებითი შეკვეთა", "იგივე მაგიდა, ახალი ბარათი ნიშნით „დამატებითი“."],
+        ["სტოპ-ლისტი", "სამზარეულო ერთი ღილაკით ხსნის კერძს, მიმტანი მას აღარ ხედავს."],
+        ["გაუქმება მიზეზით", "მოლარე აუქმებს პოზიციას, სამზარეულო და მიმტანი მაშინვე იგებენ. მზა კერძი დანაკარგად ჩაიწერება."],
+        ["მენიუ Google ცხრილში", "მფლობელი ცვლის ფასებს ცხრილში, ბოტი მათ ბრძანებით იღებს."],
+        ["სამი ენა", "რუსული, ქართული და ინგლისური. თითოეულ თანამშრომელს თავისი."],
+        ["სალაროს აპარატის გარეშე", "მუშაობს Telegram-ში იმ ტელეფონებზე, რომლებიც გუნდს უკვე აქვს."],
+      ],
+    },
+    en: {
+      eyebrow: "Demo · Cafe cash desk", navBots: "Bots", navWrite: "Message →", finalTitle: "Want this cash desk in your cafe?", finalText: "I will set it up for your menu, tables and team. Message me on Telegram and I will show it on your menu.", finalBtn: "Discuss on Telegram",
+      title: "Cash desk in Telegram",
+      sub: "The waiter takes orders with buttons, the kitchen and bar get tickets, the cashier closes the table, and the owner sees the day's totals in the evening. Tap the buttons in the chats — it works like the real bot.",
+      reset: "Start over", step: "Step {n} of 6", done: "Done",
+      w: "Waiter", wSub: "cafe bot · Nino", k: "Kitchen", kSub: "group · cook", b: "Bar", bSub: "group · barista",
+      c: "Cashier", cSub: "cafe bot · Keti", o: "Owner", oSub: "cafe bot · 23:30", groupNote: "The cook taps buttons on the ticket",
+      waiterName: "Nino", cafe: "Aroma",
+      "btn.new_order": "➕ New order", "btn.my_tables": "📋 My tables", "btn.open_checks": "🧾 Open tables", "btn.shift_now": "📊 Shift so far",
+      "btn.takeaway": "🥡 Takeaway", "btn.send": "✅ Send", "btn.cancel": "✖ Cancel", "btn.accept": "👌 Accept", "btn.ready": "✅ Ready",
+      "btn.paid": "💰 Paid", "btn.cancel_item": "❌ Cancel item", "btn.back": "⬅ Back", "btn.refresh": "🔄 Refresh",
+      choose_table: "Choose a table:", "cart.title": "{place} · in this order:", "cart.empty": "Cart is empty", "cart.choose_category": "Choose a category:",
+      "cart.cancelled": "Order cancelled.", table: "Table {n}", takeaway: "Takeaway",
+      "order.sent": "✅ {place} · #{number} sent", "ticket.accepted": "👌 accepted at {time}", "ticket.ready": "ready at {time} ({min} min)",
+      "notify.accepted": "👌 {place}: {station} accepted the order", "notify.ready": "🔔 {place}: {station} ready — {items}",
+      "tables.line": "{place} · #{number} · {sum} · opened {time}", "tables.none": "No open tables.",
+      "status.new": "waiting", "status.accepted": "cooking", "status.ready": "ready",
+      "bill.title": "🧾 {place} · #{number} · waiter {waiter}", "bill.total": "Total", "bill.requested": "The cashier has been told the guest wants the bill.",
+      "notify.bill": "🔔 {place} wants the bill · {sum} · {waiter}", "kassa.title": "Open tables (🔔 — asking for the bill):",
+      "pay.how": "How was {sum} paid?", "pay.cash": "💵 Cash", "pay.card": "💳 Card", "pay.transfer": "📲 Transfer",
+      "pay.done": "✅ {place} closed · {sum}", "shift": "📊 Today {sum} · {n} checks\n💵 {cash}  💳 {card}  📲 {transfer}\nOpen tables: {open}",
+      "report.title": "📊 {cafe} · {date}", "report.revenue": "Revenue: {sum} · {n} checks · average {avg}",
+      "report.cancels": "Cancellations: {n} for {sum} (losses {lost})", "report.top": "Top: {items}", "report.sheet_ok": "📄 Saved to the Google Sheet.",
+      kitchen: "Kitchen", bar: "Bar", onlyOne: "The demo has one order. Press «Start over» to go through it again.",
+      h1: "Waiter: tap «➕ New order».", h2: "Choose a table. Busy ones are marked with a dot.",
+      h3: "Choose a category and add dishes and drinks.", h3b: "Add more or tap «✅ Send». Food goes to the kitchen, drinks to the bar.",
+      h4: "{station}: tap «👌 Accept», then «✅ Ready». The waiter gets a notification.",
+      h5: "Waiter: «📋 My tables» → «🧾 Table {n}» when the guest asks for the bill.",
+      h6: "Cashier: «🧾 Open tables» → table → «💰 Paid» → payment method.",
+      h7: "The table is closed. In the evening the owner gets the day's totals and the sheet.", h8: "That's the whole path of an order. Try it again in another language.",
+      open: "Open: {name}", showReport: "Skip to 23:30",
+      sheetTitle: "The cafe's Google Sheet", sheetNote: "Example: other orders of the day are added to the totals. The demo order is highlighted.",
+      sheetTabs: ["Daily totals", "Checks", "Cancellations", "By waiter"],
+      sheetHead: ["Date", "Check #", "Table", "Waiter", "Opened", "Paid", "Method", "Total, ₾", "Items"],
+      methods: { cash: "Cash", card: "Card", transfer: "Transfer" },
+      features: [
+        ["Extra orders", "Same table, a new ticket marked EXTRA."],
+        ["Stop list", "The kitchen takes a dish off with one tap; waiters stop seeing it."],
+        ["Cancel with a reason", "The cashier cancels an item; the kitchen and waiter know at once. A ready dish counts as a loss."],
+        ["Menu in Google Sheets", "The owner edits prices in the sheet; the bot loads them with one command."],
+        ["Three languages", "Russian, Georgian and English. Each employee picks their own."],
+        ["No POS hardware", "Runs in Telegram on the phones the team already has."],
+      ],
+    },
+  };
+
+  // ---------- состояние ----------
+  let lang = pickLang();
+  let S, chats, seq, tab, unread;
+
+  function fresh() {
+    S = {
+      clock: 12 * 60 + 40, number: 14, table: null, cart: {}, cat: null, wview: null, sent: false, cancelled: false,
+      tickets: {}, billReq: false, paid: false, method: null, kview: null, report: false,
+      sentAt: null, paidAt: null,
+    };
+    chats = { waiter: [], kitchen: [], bar: [], cashier: [], owner: [] };
+    seq = 0; tab = "waiter"; unread = { waiter: 0, kitchen: 0, bar: 0, cashier: 0 };
+  }
+
+  function pickLang() {
+    const h = (location.hash || "").slice(1);
+    if (T[h]) return h;
+    const nav = (navigator.language || "ru").slice(0, 2);
+    return nav === "ka" || nav === "en" ? nav : "ru";
+  }
+
+  // ---------- помощники ----------
+  const t = (key, args = {}) => {
+    let s = T[lang][key] ?? T.ru[key] ?? key;
+    if (typeof s !== "string") return s;
+    return s.replace(/\{(\w+)\}/g, (_, k) => (k in args ? args[k] : `{${k}}`));
+  };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const money = (n) => `${n} ₾`;
+  const hhmm = (m) => `${String(Math.floor(m / 60) % 24).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+  const item = (id) => MENU.find((m) => m.id === id);
+  const name = (m) => m[lang];
+  const place = () => (S.table === "x" ? t("takeaway") : t("table", { n: S.table }));
+  const stationName = (st) => t(st);
+  const lines = () => Object.entries(S.cart).filter(([, q]) => q > 0).map(([id, q]) => ({ m: item(id), q }));
+  const total = () => lines().reduce((s, l) => s + l.m.price * l.q, 0);
+  const short = (st) => lines().filter((l) => l.m.st === st).map((l) => `${l.q}× ${name(l.m)}`).join(", ");
+  const tick = (min = 1) => { S.clock += min; return S.clock; };
+
+  function push(chat, msg) {
+    msg.id = ++seq;
+    msg.time = msg.time ?? S.clock;
+    chats[chat].push(msg);
+    if (chat in unread && chat !== tab && narrow()) unread[chat]++;
+    return msg;
+  }
+  const narrow = () => matchMedia("(max-width: 720px)").matches;
+
+  // ---------- что показывает каждое сообщение ----------
+  function view(msg) {
+    switch (msg.kind) {
+      case "me": return { text: t(msg.key), me: true };
+      case "text": return { text: t(msg.key, msg.args?.()) };
+      case "wscreen": return waiterScreen(msg);
+      case "ticket": return ticket(msg.st);
+      case "mytables": return myTables(msg.snap);
+      case "kscreen": return kassaScreen();
+      case "report": return { text: reportText() };
+      default: return { text: "" };
+    }
+  }
+
+  function waiterScreen(msg) {
+    if (msg.frozen === "sent") {
+      const out = [t("order.sent", { place: place(), number: S.number })];
+      for (const st of ["kitchen", "bar"]) if (short(st)) out.push(`${ICON[st]} <b>${esc(stationName(st))}</b>: ${esc(short(st))}`);
+      return { text: out.join("\n"), html: true };
+    }
+    if (msg.frozen === "cancelled") return { text: t("cart.cancelled") };
+    if (S.wview === "tables") {
+      const keys = [];
+      const nums = Array.from({ length: TABLES }, (_, i) => i + 1);
+      for (let i = 0; i < nums.length; i += 4) keys.push(nums.slice(i, i + 4).map((n) => ({
+        label: BUSY.includes(n) ? `•${n}` : String(n), act: BUSY.includes(n) ? "busy" : "w_table", arg: n, pick: n === 4,
+      })));
+      keys.push([{ label: t("btn.takeaway"), act: "w_table", arg: "x" }, { label: t("btn.cancel"), act: "w_cancel" }]);
+      return { text: t("choose_table"), keys };
+    }
+    // корзина
+    const ls = lines();
+    const text = [t("cart.title", { place: place() })];
+    if (!ls.length) text.push("  " + t("cart.empty"));
+    for (const l of ls) text.push(`  ${l.q}× ${name(l.m)} — ${money(l.m.price * l.q)}`);
+    if (S.cat === null) text.push("", t("cart.choose_category"));
+    const keys = [Object.keys(CATS).map((c) => ({ label: (S.cat === c ? "• " : "") + CATS[c][lang], act: "w_cat", arg: c, pick: S.cat === null && !ls.length }))];
+    if (S.cat) {
+      const items = MENU.filter((m) => m.cat === S.cat).map((m) => ({ label: `${name(m)} ${money(m.price)}`, act: "w_add", arg: m.id }));
+      for (let i = 0; i < items.length; i += 2) keys.push(items.slice(i, i + 2));
+    }
+    if (ls.length) keys.push([{ label: t("btn.send"), act: "w_send", pick: ls.some((l) => l.m.st === "kitchen") && ls.some((l) => l.m.st === "bar") }, { label: t("btn.cancel"), act: "w_cancel" }]);
+    return { text: text.join("\n"), keys };
+  }
+
+  function ticket(st) {
+    const k = S.tickets[st];
+    const head = `${ICON[st]} ${place()} · #${S.number} · ${hhmm(k.created)}`;
+    const items = lines().filter((l) => l.m.st === st).map((l) => `${l.q}× ${name(l.m)}`);
+    if (k.status === "ready") {
+      return { text: `✔ ${place()} · #${S.number} · ${hhmm(k.created)} · ` + t("ticket.ready", { time: hhmm(k.ready), min: k.ready - k.created }) };
+    }
+    const text = [head, ...items];
+    if (k.status === "accepted") text.push(t("ticket.accepted", { time: hhmm(k.acc) }));
+    const keys = k.status === "new"
+      ? [[{ label: t("btn.accept"), act: "st_acc", arg: st, pick: true }, { label: t("btn.ready"), act: "st_rdy", arg: st }]]
+      : [[{ label: t("btn.ready"), act: "st_rdy", arg: st, pick: true }]];
+    return { text: text.join("\n"), keys };
+  }
+
+  // Как в боте: сообщение «Мои столы» показывает состояние на момент нажатия и потом не меняется.
+  function myTables(snap) {
+    if (!snap) return { text: t("tables.none") };
+    const text = [t("tables.line", { place: place(), number: S.number, sum: money(total()), time: hhmm(S.sentAt) })];
+    const st = Object.entries(snap).map(([s, status]) => `${ICON[s]} ${t("status." + status)}`).join("   ");
+    if (st) text.push("   " + st);
+    const allReady = Object.values(snap).every((v) => v === "ready");
+    return { text: text.join("\n"), keys: S.billReq || S.paid ? [] : [[{ label: `🧾 ${place()}`, act: "w_bill", pick: allReady }]] };
+  }
+
+  function kassaScreen() {
+    const p = place();
+    if (S.kview === "done") return { text: t("pay.done", { place: p, sum: money(total()) }) + ` · ${t("pay." + S.method)}` };
+    if (!S.sent || S.paid) return { text: t("tables.none") };
+    if (S.kview === "list") {
+      return {
+        text: t("kassa.title"),
+        keys: [[{ label: `${p} #${S.number} · ${money(total())} · ${t("waiterName")}${S.billReq ? " 🔔" : ""}`, act: "k_bill", pick: S.billReq }],
+               [{ label: t("btn.refresh"), act: "k_list" }]],
+      };
+    }
+    const billText = [t("bill.title", { place: p, number: S.number, waiter: t("waiterName") })];
+    for (const l of lines()) billText.push(`${l.q}× ${name(l.m)} — ${money(l.m.price * l.q)}`);
+    billText.push("—".repeat(14), `${t("bill.total")}: ${money(total())}`);
+    if (S.kview === "bill") {
+      return { text: billText.join("\n"), keys: [[{ label: t("btn.paid"), act: "k_pay", pick: true }, { label: t("btn.cancel_item"), act: "demo_only" }], [{ label: t("btn.back"), act: "k_list" }]] };
+    }
+    // способ оплаты
+    return {
+      text: t("pay.how", { sum: money(total()) }),
+      keys: [[{ label: t("pay.cash"), act: "k_method", arg: "cash" }, { label: t("pay.card"), act: "k_method", arg: "card", pick: true }, { label: t("pay.transfer"), act: "k_method", arg: "transfer" }],
+             [{ label: t("btn.back"), act: "k_bill" }]],
+    };
+  }
+
+  // Пример дня: эти чеки «уже были» до заказа из демо.
+  const BASE = { revenue: 1186, checks: 45, cash: 418, card: 612, transfer: 156, cancels: 3, cancelSum: 26, lost: 8 };
+  function day() {
+    const d = { ...BASE };
+    if (S.paid) { d.revenue += total(); d.checks += 1; d[S.method] += total(); }
+    d.avg = Math.round(d.revenue / d.checks);
+    return d;
+  }
+  function today() {
+    const n = new Date();
+    return `${String(n.getDate()).padStart(2, "0")}.${String(n.getMonth() + 1).padStart(2, "0")}.${n.getFullYear()}`;
+  }
+  function reportText() {
+    const d = day();
+    const top = [["capp", 38], ["plov", 21], ["manti", 17]].map(([id, q]) => `${name(item(id))} ${q}`).join(", ");
+    return [
+      t("report.title", { cafe: t("cafe"), date: today() }),
+      t("report.revenue", { sum: money(d.revenue), n: d.checks, avg: money(d.avg) }),
+      `💵 ${money(d.cash)}  💳 ${money(d.card)}  📲 ${money(d.transfer)}`,
+      t("report.cancels", { n: d.cancels, sum: money(d.cancelSum), lost: money(d.lost) }),
+      t("report.top", { items: top }),
+      "",
+      t("report.sheet_ok"),
+    ].join("\n");
+  }
+
+  // ---------- действия ----------
+  const ACT = {
+    w_new() {
+      push("waiter", { kind: "me", key: "btn.new_order" });
+      if (S.sent) { push("waiter", { kind: "text", key: "onlyOne" }); return; }
+      freezeWaiterScreen("cancelled");
+      S.table = null; S.cart = {}; S.cat = null; S.wview = "tables";
+      push("waiter", { kind: "wscreen" });
+    },
+    w_table(n) { S.table = n; S.wview = "cart"; },
+    w_cat(c) { S.cat = c; },
+    w_add(id) { S.cart[id] = (S.cart[id] || 0) + 1; },
+    w_cancel() { freezeWaiterScreen("cancelled"); S.wview = null; S.table = null; S.cart = {}; },
+    w_send() {
+      if (!lines().length) return;
+      freezeWaiterScreen("sent"); S.wview = null; S.sent = true; S.sentAt = tick();
+      for (const st of ["kitchen", "bar"]) {
+        if (!short(st)) continue;
+        S.tickets[st] = { status: "new", created: S.clock };
+        push(st, { kind: "ticket", st });
+      }
+    },
+    st_acc(st) {
+      const k = S.tickets[st]; if (!k || k.status !== "new") return;
+      k.status = "accepted"; k.acc = tick(1);
+      push("waiter", { kind: "text", key: "notify.accepted", args: () => ({ place: place(), station: `${ICON[st]} <b>${esc(stationName(st))}</b>` }), html: true });
+    },
+    st_rdy(st) {
+      const k = S.tickets[st]; if (!k || k.status === "ready") return;
+      if (k.status === "new") k.acc = S.clock;
+      k.status = "ready"; k.ready = tick(st === "kitchen" ? 11 : 4);
+      push("waiter", { kind: "text", key: "notify.ready", args: () => ({ place: place(), station: `${ICON[st]} <b>${esc(stationName(st))}</b>`, items: esc(short(st)) }), html: true });
+    },
+    w_my() {
+      push("waiter", { kind: "me", key: "btn.my_tables" });
+      const snap = S.sent && !S.paid ? Object.fromEntries(Object.entries(S.tickets).map(([s, k]) => [s, k.status])) : null;
+      push("waiter", { kind: "mytables", snap });
+    },
+    w_bill() {
+      if (!S.sent || S.billReq || S.paid) return;
+      S.billReq = true; tick(2);
+      push("waiter", { kind: "text", key: "bill.requested" });
+      push("cashier", { kind: "text", key: "notify.bill", args: () => ({ place: place(), sum: money(total()), waiter: t("waiterName") }) });
+    },
+    k_open() { push("cashier", { kind: "me", key: "btn.open_checks" }); S.kview = "list"; freezeKassa(); push("cashier", { kind: "kscreen" }); },
+    k_list() { S.kview = "list"; },
+    k_bill() { if (S.sent && !S.paid) S.kview = "bill"; },
+    k_pay() { if (S.sent && !S.paid) S.kview = "pay"; },
+    k_method(m) {
+      if (S.paid) return;
+      S.paid = true; S.method = m; S.kview = "done"; S.paidAt = tick(1);
+      push("waiter", { kind: "text", key: "pay.done", args: () => ({ place: place(), sum: money(total()) }) });
+    },
+    k_shift() {
+      push("cashier", { kind: "me", key: "btn.shift_now" });
+      const open = S.sent && !S.paid ? 1 + BUSY.length : BUSY.length;
+      push("cashier", { kind: "text", key: "shift", args: () => { const d = day(); return { sum: money(d.revenue), n: d.checks, cash: money(d.cash), card: money(d.card), transfer: money(d.transfer), open }; } });
+    },
+    report() {
+      if (!S.paid || S.report) return;
+      S.report = true;
+      push("owner", { kind: "report", time: 23 * 60 + 30 });
+    },
+  };
+
+  function freezeWaiterScreen(how) {
+    const live = chats.waiter.filter((m) => m.kind === "wscreen" && !m.frozen).pop();
+    if (live) live.frozen = how;
+  }
+  function freezeKassa() {
+    // старый экран кассы остаётся как текст, кнопки живут только на последнем
+    chats.cashier.filter((m) => m.kind === "kscreen").forEach((m) => (m.stale = true));
+  }
+
+  // ---------- подсказка ----------
+  function hint() {
+    const allReady = S.sent && Object.values(S.tickets).every((k) => k.status === "ready");
+    const pending = ["kitchen", "bar"].find((st) => S.tickets[st] && S.tickets[st].status !== "ready");
+    if (S.report) return { n: 6, key: "h8", target: "owner" };
+    if (S.paid) return { n: 6, key: "h7", target: "owner", go: "report" };
+    if (S.billReq) return { n: 5, key: "h6", target: "cashier" };
+    if (allReady) return { n: 4, key: "h5", target: "waiter", args: { n: S.table === "x" ? "" : S.table } };
+    if (pending) return { n: 3, key: "h4", target: pending, args: { station: stationName(pending) } };
+    if (S.wview === "cart") return { n: 2, key: lines().length ? "h3b" : "h3", target: "waiter" };
+    if (S.wview === "tables") return { n: 1, key: "h2", target: "waiter" };
+    return { n: 1, key: "h1", target: "waiter" };
+  }
+
+  // ---------- отрисовка ----------
+  const PANELS = [
+    { id: "waiter", ava: "📝", title: "w", sub: "wSub", dock: () => [[{ label: t("btn.new_order"), act: "w_new", pick: !S.sent && !S.wview }, { label: t("btn.my_tables"), act: "w_my", pick: S.sent && !S.billReq && Object.values(S.tickets).every((k) => k.status === "ready") }]] },
+    { id: "kitchen", ava: "🍳", title: "k", sub: "kSub", dock: null },
+    { id: "bar", ava: "☕", title: "b", sub: "bSub", dock: null },
+    { id: "cashier", ava: "💰", title: "c", sub: "cSub", dock: () => [[{ label: t("btn.open_checks"), act: "k_open", pick: S.billReq && !S.paid && S.kview !== "bill" && S.kview !== "pay" && !chats.cashier.some((m) => m.kind === "kscreen" && !m.stale) }, { label: t("btn.shift_now"), act: "k_shift" }]] },
+  ];
+
+  function keysHtml(keys, cls = "keys") {
+    if (!keys || !keys.length) return "";
+    return `<div class="${cls}">` + keys.map((row) => `<div class="row">` + row.map((k) =>
+      `<button type="button" data-act="${k.act}"${k.arg !== undefined ? ` data-arg="${esc(k.arg)}"` : ""}${k.pick ? ' class="pick"' : ""}>${esc(k.label)}</button>`
+    ).join("") + `</div>`).join("") + `</div>`;
+  }
+
+  function chatHtml(id) {
+    const list = chats[id];
+    const lastLive = {}; // кнопки только у последнего «живого» экрана каждого вида
+    list.forEach((m) => { if (["wscreen", "kscreen", "mytables"].includes(m.kind)) lastLive[m.kind] = m.id; });
+    return list.map((m) => {
+      const v = view(m);
+      let keys = v.keys;
+      if (m.stale || m.frozen || (lastLive[m.kind] && lastLive[m.kind] !== m.id)) keys = null;
+      if (m.kind === "kscreen" && m.stale) return ""; // прошлый экран кассы заменён новым
+      const body = v.html || m.html ? v.text : esc(v.text);
+      return `<div class="msg${v.me ? " me" : ""}"><div class="bubble">${body}<time>${hhmm(m.time)}</time></div>${keysHtml(keys)}</div>`;
+    }).join("");
+  }
+
+  function render() {
+    document.documentElement.lang = lang;
+    document.title = t("title") + " · shat.bot";
+    location.hash = lang;
+    for (const l of Object.keys(T)) document.getElementById("lang-" + l).setAttribute("aria-pressed", String(l === lang));
+    $("t-title").textContent = t("title");
+    $("t-eyebrow").textContent = t("eyebrow");
+    $("nav-bots").textContent = t("navBots");
+    $("nav-write").textContent = t("navWrite");
+    $("final-title").textContent = t("finalTitle");
+    $("final-text").textContent = t("finalText");
+    $("final-btn").textContent = t("finalBtn");
+    $("t-sub").textContent = t("sub");
+    $("reset").textContent = t("reset");
+
+    const h = hint();
+    $("hint-step").textContent = S.report ? t("done") : t("step", { n: h.n });
+    $("hint-text").textContent = t(h.key, h.args || {});
+    const go = $("hint-go");
+    if (h.go === "report") { go.hidden = false; go.textContent = t("showReport"); go.dataset.act = "report"; }
+    else if (narrow() && h.target !== tab && h.target !== "owner") { go.hidden = false; go.textContent = t("open", { name: t(PANELS.find((p) => p.id === h.target).title) }); go.dataset.act = "tab"; go.dataset.arg = h.target; }
+    else go.hidden = true;
+
+    $("tabs").innerHTML = PANELS.map((p) =>
+      `<button type="button" role="tab" data-act="tab" data-arg="${p.id}" aria-selected="${p.id === tab}">${p.ava} ${esc(t(p.title))}${unread[p.id] ? `<span class="badge">${unread[p.id]}</span>` : ""}</button>`
+    ).join("");
+
+    const stage = $("stage");
+    const scroll = {};
+    stage.querySelectorAll(".chat").forEach((c) => (scroll[c.dataset.id] = c.scrollHeight - c.scrollTop - c.clientHeight < 40));
+    stage.innerHTML = PANELS.map((p) => `
+      <div class="phone${p.id === tab ? " active" : ""}${h.target === p.id ? " is-target" : ""}" data-panel="${p.id}">
+        <header><span class="ava" aria-hidden="true">${p.ava}</span><div><b>${esc(t(p.title))}</b><small>${esc(t(p.sub))}</small></div></header>
+        <div class="chat" data-id="${p.id}">${chatHtml(p.id)}</div>
+        <div class="dock">${p.dock ? keysHtml(p.dock(), "dock-keys") : `<div class="group-note">${esc(t("groupNote"))}</div>`}</div>
+      </div>`).join("");
+    stage.querySelectorAll(".chat").forEach((c) => { c.scrollTop = c.scrollHeight; });
+
+    const owner = $("owner");
+    owner.hidden = !S.report;
+    if (S.report) {
+      $("phone-owner").innerHTML = `<header><span class="ava" aria-hidden="true">📊</span><div><b>${esc(t("o"))}</b><small>${esc(t("oSub"))}</small></div></header><div class="chat">${chatHtml("owner")}</div>`;
+      $("sheet-title").textContent = t("sheetTitle");
+      $("sheet-tabs").innerHTML = t("sheetTabs").map((s, i) => `<span class="${i === 1 ? "on" : ""}">${esc(s)}</span>`).join("");
+      const head = t("sheetHead");
+      const methods = t("methods");
+      const n = new Date();
+      const date = `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, "0")}-${String(n.getDate()).padStart(2, "0")}`;
+      const ru = lang === "ru";
+      const away = ru ? "с собой" : "takeaway";
+      const sample = ru
+        ? [[11, 3, "Гиорги", "11:52", "12:31", "card", 34, "2× Хачапури, 2× Латте"],
+           [12, 7, "Нино", "12:05", "12:44", "cash", 18, "1× Плов"],
+           [13, "", "Гиорги", "12:20", "12:26", "transfer", 14, "2× Капучино, 1× Чай чёрный"]]
+        : [[11, 3, "Giorgi", "11:52", "12:31", "card", 34, "2× Khachapuri, 2× Latte"],
+           [12, 7, "Nino", "12:05", "12:44", "cash", 18, "1× Plov"],
+           [13, "", "Giorgi", "12:20", "12:26", "transfer", 14, "2× Cappuccino, 1× Black tea"]];
+      const sampleRows = sample.map((r) => [date, r[0], r[1] || away, r[2], r[3], r[4], methods[r[5]], r[6], r[7]]);
+      // В таблице имена как в боте у сотрудника; позиции — на языке таблицы (ru или en)
+      const ours = [date, S.number, S.table === "x" ? away : S.table, ru ? "Нино" : "Nino",
+        hhmm(S.sentAt), hhmm(S.paidAt), methods[S.method], total(), lines().map((l) => `${l.q}× ${l.m[ru ? "ru" : "en"]}`).join(", ")];
+      $("sheet-table").innerHTML = `<table><thead><tr>${head.map((x) => `<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>` +
+        sampleRows.map((r) => `<tr>${r.map((x) => `<td>${esc(x)}</td>`).join("")}</tr>`).join("") +
+        `<tr>${ours.map((x) => `<td class="new">${esc(x)}</td>`).join("")}</tr></tbody></table>`;
+      $("sheet-note").textContent = t("sheetNote");
+    }
+
+    $("features").innerHTML = t("features").map(([a, b]) => `<div><b>${esc(a)}</b><span>${esc(b)}</span></div>`).join("");
+  }
+  const $ = (id) => document.getElementById(id);
+
+  // ---------- события ----------
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    if (b.dataset.lang) { lang = b.dataset.lang; render(); return; }
+    if (b.id === "reset") { fresh(); render(); return; }
+    const act = b.dataset.act, arg = b.dataset.arg;
+    if (!act) return;
+    if (act === "tab") { tab = arg; unread[arg] = 0; render(); return; }
+    if (act === "busy" || act === "demo_only") return;
+    const fn = ACT[act];
+    if (!fn) return;
+    fn(arg !== undefined && /^\d+$/.test(arg) ? Number(arg) : arg);
+    if (act === "report") requestAnimationFrame(() => $("owner").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }));
+    render();
+  });
+  addEventListener("hashchange", () => { const h = location.hash.slice(1); if (T[h] && h !== lang) { lang = h; render(); } });
+  matchMedia("(max-width: 720px)").addEventListener("change", render);
+
+  fresh();
+  render();
+})();
+</script>
+
+</body>
+</html>
