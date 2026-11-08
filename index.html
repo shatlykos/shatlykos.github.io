@@ -3,8 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Абдулла — Telegram-боты для бизнеса</title>
-<meta name="description" content="Telegram-боты и автоматизация для малого бизнеса: касса для кафе, запись клиентов, заказы, бронирование, визитки для сообществ. Google Таблицы, Календарь, Tilda.">
+<title>Telegram-боты для бизнеса: касса для кафе, запись клиентов, заказы | shat.bot</title>
+<meta name="description" content="Делаю Telegram-ботов для малого бизнеса: касса для кафе (официант, кухня, касса, отчёты), запись клиентов, заказ обедов, бронирование, боты для сообществ. Google Таблицы, русский, грузинский, английский.">
+<link rel="canonical" href="https://shatlykos.github.io/">
+<link rel="alternate" hreflang="ru" href="https://shatlykos.github.io/">
+<link rel="alternate" hreflang="en" href="https://shatlykos.github.io/en/">
+<link rel="alternate" hreflang="x-default" href="https://shatlykos.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="shat.bot">
+<meta property="og:title" content="Telegram-боты для бизнеса: касса для кафе, запись клиентов, заказы | shat.bot">
+<meta property="og:description" content="Делаю Telegram-ботов для малого бизнеса: касса для кафе (официант, кухня, касса, отчёты), запись клиентов, заказ обедов, бронирование, боты для сообществ. Google Таблицы, русский, грузинский, английский.">
+<meta property="og:url" content="https://shatlykos.github.io/">
+<meta property="og:locale" content="ru_RU">
+<!-- Google Search Console: сюда вставить meta-тег подтверждения, например
+<meta name="google-site-verification" content="КОД_ИЗ_SEARCH_CONSOLE"> -->
+<!-- Google Analytics 4: сюда вставить код с ID вида G-XXXXXXXXXX -->
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "shat.bot", "description": "Делаю Telegram-ботов для малого бизнеса: касса для кафе (официант, кухня, касса, отчёты), запись клиентов, заказ обедов, бронирование, боты для сообществ. Google Таблицы, русский, грузинский, английский.", "url": "https://shatlykos.github.io/", "areaServed": ["GE", "Worldwide"], "knowsLanguage": ["ru", "en", "ka"], "sameAs": ["https://t.me/abdullah_shatlyk"], "founder": {"@type": "Person", "name": "Абдулла"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
 <style>
@@ -41,7 +55,9 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .logo{font-family:Unbounded,sans-serif;font-weight:700;font-size:18px;text-decoration:none}
 .logo span{color:var(--accent)}
 nav a{text-decoration:none;color:var(--muted);font-weight:600;margin-left:20px;font-size:15px}
-@media(max-width:640px){nav a:not(.nav-cta){display:none}}
+@media(max-width:640px){nav a:not(.nav-cta):not(.lang){display:none}}
+.lang{border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px!important;color:var(--ink)!important}
+
 .nav-cta{color:var(--accent)!important}
 
 /* hero */
@@ -146,12 +162,13 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
 
 <header>
   <div class="wrap">
-    <a class="logo" href="#">shat<span>.bot</span></a>
+    <a class="logo" href="./">shat<span>.bot</span></a>
     <nav>
       <a href="#bots">Боты</a>
       <a href="#how">Как работаю</a>
       <a href="#prices">Цены</a>
       <a class="nav-cta" href="https://t.me/abdullah_shatlyk">Написать →</a>
+      <a class="lang" href="en/" hreflang="en" lang="en" title="English version">EN</a>
     </nav>
   </div>
 </header>
