@@ -3,7 +3,7 @@
    События: contact_click (написать в Telegram), bot_demo_click (открыть демо-бота в Telegram),
    cafe_demo_open (переход на демо кассы) и шаги демо через window.track(...) в cafe.html. */
 (function () {
-  var GA_ID = "G-XXXXXXXXXX";
+  var GA_ID = "G-WPJV2RCHPK";
   var on = /^G-[A-Z0-9]{6,}$/.test(GA_ID) && GA_ID !== "G-XXXXXXXXXX";
 
   window.dataLayer = window.dataLayer || [];
