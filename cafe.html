@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Abdullab — Cafe cash desk demo</title>
-<link rel="icon" href="favicon.ico?v=2" sizes="32x32">
-<link rel="icon" href="assets/favicon.svg?v=2" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="icon" href="favicon.ico?v=3" sizes="32x32">
+<link rel="icon" href="assets/favicon.svg?v=3" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=3">
 <meta name="description" content="Interactive demo: the waiter takes orders with buttons in Telegram, the kitchen and bar get tickets, the cashier closes the table and the owner gets a report.">
 <link rel="canonical" href="https://abdullab.com/cafe.html">
 <meta property="og:type" content="website">
@@ -16,7 +16,7 @@
 <meta property="og:url" content="https://abdullab.com/cafe.html">
 <script src="/analytics.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:wght@400;500;600;700&family=Lexend:wght@600&family=Noto+Sans+Georgian:wght@400;500;700&display=swap">
 <style>
 /* Layout: brand line + live hint on top, four chat phones side by side (tabs on a phone), owner's evening report below. */
 /* Layout: site header, live hint, four chat phones side by side (tabs on a phone), owner's report, call to action. Colors and fonts follow Abdullab. */
@@ -75,7 +75,8 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 /* ---------- top ---------- */
 .top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; }
 .site { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.logo { font: 700 22px/1 var(--font-display); text-transform: uppercase; letter-spacing: .02em; text-decoration: none; color: var(--ink); }
+.logo{display:inline-flex;align-items:center;font-family:Lexend,sans-serif;font-weight:600;font-size:20px;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;color:var(--ink)}
+.logo img{width:30px;height:30px;display:block;margin-right:10px}
 .logo span { color: var(--accent); }
 .site nav { display: flex; gap: 18px; align-items: center; }
 .site nav a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 15px; }
@@ -186,7 +187,7 @@ td.new { background: var(--spark-soft); }
 
 <div class="wrap">
   <div class="site">
-    <a class="logo" id="logo" href="./" aria-label="Abdullab">abdul<span>·lab</span></a>
+    <a class="logo" id="logo" href="./" aria-label="Abdullab"><img src="/assets/logo-mark.svg" alt="" width="30" height="30">abdul<span>lab</span></a>
     <nav><a href="./#bots" id="nav-bots"></a><a class="cta-link" href="https://t.me/abdullah_shatlyk" id="nav-write"></a></nav>
   </div>
   <div class="top">
