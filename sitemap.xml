@@ -15,6 +15,48 @@
     <lastmod>2026-11-09</lastmod>
   </url>
   <url>
+    <loc>https://abdullab.com/cafe-pos/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdullab.com/cafe-pos/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://abdullab.com/ru/kassa-dlya-kafe/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdullab.com/cafe-pos/"/>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://abdullab.com/ru/kassa-dlya-kafe/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdullab.com/cafe-pos/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://abdullab.com/ru/kassa-dlya-kafe/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdullab.com/cafe-pos/"/>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://abdullab.com/booking-bot/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdullab.com/booking-bot/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://abdullab.com/ru/bot-dlya-zapisi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdullab.com/booking-bot/"/>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://abdullab.com/ru/bot-dlya-zapisi/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdullab.com/booking-bot/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://abdullab.com/ru/bot-dlya-zapisi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdullab.com/booking-bot/"/>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://abdullab.com/food-order-bot/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdullab.com/food-order-bot/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://abdullab.com/ru/bot-dlya-zakazov/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdullab.com/food-order-bot/"/>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://abdullab.com/ru/bot-dlya-zakazov/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://abdullab.com/food-order-bot/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://abdullab.com/ru/bot-dlya-zakazov/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://abdullab.com/food-order-bot/"/>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
     <loc>https://abdullab.com/cafe.html</loc>
     <lastmod>2026-11-09</lastmod>
   </url>

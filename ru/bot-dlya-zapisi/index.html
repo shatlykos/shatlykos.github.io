@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бот для записи клиентов в Telegram: запись, бронирование, напоминания | Abdullab</title>
+<meta name="description" content="Telegram-бот для записи и бронирования: клиент видит свободное время, оставляет заявку, администратор подтверждает в Telegram, напоминания за 24 и 2 часа. Работает с Google Календарём.">
+<link rel="canonical" href="https://abdullab.com/ru/bot-dlya-zapisi/">
+<link rel="alternate" hreflang="en" href="https://abdullab.com/booking-bot/">
+<link rel="alternate" hreflang="ru" href="https://abdullab.com/ru/bot-dlya-zapisi/">
+<link rel="alternate" hreflang="x-default" href="https://abdullab.com/booking-bot/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Abdullab">
+<meta property="og:title" content="Бот для записи клиентов в Telegram: запись, бронирование, напоминания | Abdullab">
+<meta property="og:description" content="Telegram-бот для записи и бронирования: клиент видит свободное время, оставляет заявку, администратор подтверждает в Telegram, напоминания за 24 и 2 часа. Работает с Google Календарём.">
+<meta property="og:url" content="https://abdullab.com/ru/bot-dlya-zapisi/">
+<meta property="og:locale" content="ru_RU">
+<script src="/analytics.js" defer></script>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Service", "name": "Бот для записи клиентов", "description": "Telegram-бот для записи и бронирования: клиент видит свободное время, оставляет заявку, администратор подтверждает в Telegram, напоминания за 24 и 2 часа. Работает с Google Календарём.", "url": "https://abdullab.com/ru/bot-dlya-zapisi/", "areaServed": ["GE", "Worldwide"], "inLanguage": "ru", "provider": {"@type": "ProfessionalService", "name": "Abdullab", "url": "https://abdullab.com/", "sameAs": ["https://t.me/abdullah_shatlyk"]}, "offers": {"@type": "Offer", "priceCurrency": "USD", "price": "150"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://abdullab.com/ru/"}, {"@type": "ListItem", "position": 2, "name": "Бот для записи клиентов", "item": "https://abdullab.com/ru/bot-dlya-zapisi/"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Нужно ли клиентам что-то устанавливать?", "acceptedAnswer": {"@type": "Answer", "text": "Только Telegram, он и так есть у большинства. Бот открывается по ссылке или QR-коду."}}, {"@type": "Question", "name": "Можно записывать к нескольким специалистам или в несколько залов?", "acceptedAnswer": {"@type": "Answer", "text": "Да, у каждого зала или специалиста своё расписание."}}, {"@type": "Question", "name": "Можно ли брать предоплату?", "acceptedAnswer": {"@type": "Answer", "text": "Можно добавить. Подберём способ оплаты, который работает в вашей стране."}}, {"@type": "Question", "name": "Сколько времени занимает запуск?", "acceptedAnswer": {"@type": "Answer", "text": "Простой бот записи обычно запускаю за 48 часов."}}]}]</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="/ru/">abdul<span>lab</span></a>
+    <nav>
+      <a href="/ru/#bots">Решения</a>
+      <a href="/ru/#prices">Цены</a>
+      <a class="nav-cta" href="https://t.me/abdullah_shatlyk">Написать →</a>
+      <a class="lang" href="/booking-bot/" hreflang="en" lang="en" title="English version">EN</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="land-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="/ru/">Главная</a> › Бот для записи клиентов</div>
+    <span class="eyebrow">Для студий, коворкингов, залов и специалистов</span>
+    <h1>Бот для <em>записи клиентов</em> в Telegram: клиенты записываются сами</h1>
+    <p class="lead">Клиент видит свободное время, оставляет заявку и получает напоминания. Вы подтверждаете одним нажатием в Telegram, а запись сама попадает в Google Календарь. Без бесконечной переписки.</p>
+    <div class="actions">
+      <a class="btn btn-main" href="https://t.me/abdullah_shatlyk">Обсудить задачу в Telegram</a>
+      <a class="btn btn-ghost" href="https://t.me/shatbot_bron_bot">Попробовать демо-бота →</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Знакомо?</h2></div>
+    <div class="pains"><div class="pain"><b>Бесконечная переписка</b><span>«А во вторник свободно?» «А в 6?» Полдня уходит на согласование времени.</span></div><div class="pain"><b>Двойные записи</b><span>Два клиента на одно время, потому что расписание в блокноте.</span></div><div class="pain"><b>Клиенты не приходят</b><span>Забывают, а напомнить накануне некому.</span></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Как это работает</h2></div>
+    <div class="steps"><div class="step"><h3>Клиент</h3><p>Открывает бота, видит свободное время или афишу и выбирает слот.</p></div><div class="step"><h3>Заявка</h3><p>Бот собирает имя, контакт и детали и присылает вам.</p></div><div class="step"><h3>Подтверждение</h3><p>Вы подтверждаете или отклоняете прямо в Telegram, клиент получает ответ.</p></div><div class="step"><h3>Напоминания</h3><p>Клиенту приходит напоминание за 24 часа и за 2 часа.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Что вы получаете</h2></div>
+    <ul class="feat"><li><b>Свободное время и афиша</b><span>Клиент видит только то, что действительно свободно.</span></li><li><b>Заявки в Telegram</b><span>Все детали приходят одним сообщением с кнопками.</span></li><li><b>Подтверждение в одно нажатие</b><span>Подтвердить, отклонить или предложить другое время.</span></li><li><b>Автонапоминания</b><span>За 24 и 2 часа, меньше неявок.</span></li><li><b>Google Календарь</b><span>Записи сами появляются в вашем календаре.</span></li><li><b>Нужные языки</b><span>Русский, грузинский, английский или другие.</span></li></ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Кому подходит</h2></div>
+    <div class="who"><span>Коворкинги</span><span>Студии</span><span>Залы для мероприятий</span><span>Салоны красоты</span><span>Психологи</span><span>Репетиторы и наставники</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Стоимость</h2></div>
+    <div class="prices"><div class="row"><div><b>Бот записи для вашего бизнеса</b><small>слоты, заявки, подтверждение, напоминания</small></div><div class="p">от $150</div></div><div class="row"><div><b>Google Календарь и доработки</b><small>синхронизация, оплата, свои правила</small></div><div class="p">по запросу</div></div></div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <div class="sec-head"><h2>Вопросы</h2></div>
+    <details><summary>Нужно ли клиентам что-то устанавливать?</summary><p>Только Telegram, он и так есть у большинства. Бот открывается по ссылке или QR-коду.</p></details><details><summary>Можно записывать к нескольким специалистам или в несколько залов?</summary><p>Да, у каждого зала или специалиста своё расписание.</p></details><details><summary>Можно ли брать предоплату?</summary><p>Можно добавить. Подберём способ оплаты, который работает в вашей стране.</p></details><details><summary>Сколько времени занимает запуск?</summary><p>Простой бот записи обычно запускаю за 48 часов.</p></details>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Другие решения</h2></div>
+    <div class="more-links"><a href="/ru/kassa-dlya-kafe/">Касса для кафе<span>заказы, кухня, касса, отчёты</span></a><a href="/ru/bot-dlya-zakazov/">Бот для заказов еды<span>заказы, оплаты, Google Таблица</span></a><a href="/ru/#bots">Решения →<span>все боты и разработка под задачу</span></a></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta">
+      <h2>Обсудим ваш бизнес</h2>
+      <p>Напишите в Telegram пару слов о задаче. Отвечаю быстро и покажу, как это будет работать у вас.</p>
+      <a class="btn btn-main" href="https://t.me/abdullah_shatlyk">Написать в Telegram</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links"><a href="/ru/kassa-dlya-kafe/">Касса для кафе</a><a href="/ru/bot-dlya-zapisi/">Бот для записи клиентов</a><a href="/ru/bot-dlya-zakazov/">Бот для заказов еды</a><a href="/cafe.html#ru">Демо кассы</a></div>
+    © 2026 Абдулла · автоматизация для малого бизнеса
+  </div>
+</footer>
+
+</body>
+</html>

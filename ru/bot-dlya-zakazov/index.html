@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бот для заказов еды в Telegram: заказы обедов, оплата и отчёты в Google Таблице | Abdullab</title>
+<meta name="description" content="Telegram-бот для заказа еды и обедов: клиенты заказывают на завтра, выбирают оплату и прикладывают чек, каждый заказ сразу в Google Таблице, отчёты за месяц автоматически.">
+<link rel="canonical" href="https://abdullab.com/ru/bot-dlya-zakazov/">
+<link rel="alternate" hreflang="en" href="https://abdullab.com/food-order-bot/">
+<link rel="alternate" hreflang="ru" href="https://abdullab.com/ru/bot-dlya-zakazov/">
+<link rel="alternate" hreflang="x-default" href="https://abdullab.com/food-order-bot/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Abdullab">
+<meta property="og:title" content="Бот для заказов еды в Telegram: заказы обедов, оплата и отчёты в Google Таблице | Abdullab">
+<meta property="og:description" content="Telegram-бот для заказа еды и обедов: клиенты заказывают на завтра, выбирают оплату и прикладывают чек, каждый заказ сразу в Google Таблице, отчёты за месяц автоматически.">
+<meta property="og:url" content="https://abdullab.com/ru/bot-dlya-zakazov/">
+<meta property="og:locale" content="ru_RU">
+<script src="/analytics.js" defer></script>
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Service", "name": "Бот для заказов еды", "description": "Telegram-бот для заказа еды и обедов: клиенты заказывают на завтра, выбирают оплату и прикладывают чек, каждый заказ сразу в Google Таблице, отчёты за месяц автоматически.", "url": "https://abdullab.com/ru/bot-dlya-zakazov/", "areaServed": ["GE", "Worldwide"], "inLanguage": "ru", "provider": {"@type": "ProfessionalService", "name": "Abdullab", "url": "https://abdullab.com/", "sameAs": ["https://t.me/abdullah_shatlyk"]}, "offers": {"@type": "Offer", "priceCurrency": "USD", "price": "300"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://abdullab.com/ru/"}, {"@type": "ListItem", "position": 2, "name": "Бот для заказов еды", "item": "https://abdullab.com/ru/bot-dlya-zakazov/"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Этот бот уже работает в реальной жизни?", "acceptedAnswer": {"@type": "Answer", "text": "Да. Он начался как бот заказа школьных обедов, которым родители пользуются каждый день."}}, {"@type": "Question", "name": "Подойдёт ли он для офиса или доставки, а не школы?", "acceptedAnswer": {"@type": "Answer", "text": "Да. Смены, классы или офисы — это просто группы, настрою под ваш случай."}}, {"@type": "Question", "name": "Можно ли платить онлайн?", "acceptedAnswer": {"@type": "Answer", "text": "Чеки и предоплата работают уже сейчас, онлайн-оплату можно добавить для вашей страны."}}, {"@type": "Question", "name": "Сколько времени занимает запуск?", "acceptedAnswer": {"@type": "Answer", "text": "Обычно от 48 часов до нескольких дней, в зависимости от меню и отчётов."}}]}]</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="/ru/">abdul<span>lab</span></a>
+    <nav>
+      <a href="/ru/#bots">Решения</a>
+      <a href="/ru/#prices">Цены</a>
+      <a class="nav-cta" href="https://t.me/abdullah_shatlyk">Написать →</a>
+      <a class="lang" href="/food-order-bot/" hreflang="en" lang="en" title="English version">EN</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="land-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="/ru/">Главная</a> › Бот для заказов еды</div>
+    <span class="eyebrow">Для школ, столовых, кейтеринга и домашних кухонь</span>
+    <h1>Бот для <em>заказов еды</em> в Telegram: заказы и оплаты сразу в Google Таблице</h1>
+    <p class="lead">Клиенты заказывают на завтра, выбирают способ оплаты и прикладывают чек. Каждый заказ сразу попадает в Google Таблицу, а отчёты за месяц с графиками собираются сами. Больше не нужно собирать заказы по чатам.</p>
+    <div class="actions">
+      <a class="btn btn-main" href="https://t.me/abdullah_shatlyk">Обсудить задачу в Telegram</a>
+      <a class="btn btn-ghost" href="https://t.me/shatbot_lunch_bot">Попробовать демо-бота →</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Знакомо?</h2></div>
+    <div class="pains"><div class="pain"><b>Заказы разбросаны по чатам</b><span>Кто-то написал в группу, кто-то в личку, кто-то позвонил, а список собираете вручную.</span></div><div class="pain"><b>Кто оплатил?</b><span>Сверка чеков и долгов отнимает часы каждую неделю.</span></div><div class="pain"><b>Отчёты вручную</b><span>Подсчёт порций и денег за месяц превращается в работу на выходные.</span></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Как это работает</h2></div>
+    <div class="steps"><div class="step"><h3>Клиент</h3><p>Выбирает дату, меню или количество порций в боте.</p></div><div class="step"><h3>Оплата</h3><p>Выбирает способ оплаты, прикладывает чек или платит заранее.</p></div><div class="step"><h3>Google Таблица</h3><p>Заказ сразу появляется в таблице, кухня видит итог.</p></div><div class="step"><h3>Отчёты</h3><p>Итоги за месяц, аналитика и графики собираются автоматически.</p></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Что вы получаете</h2></div>
+    <ul class="feat"><li><b>Заказы на завтра</b><span>Понятное время закрытия приёма, кухня заранее знает количество.</span></li><li><b>Оплата и чеки</b><span>Наличные, перевод, предоплата; чек прикреплён к заказу.</span></li><li><b>Всё в Google Таблице</b><span>Одна таблица заказов, оплат и балансов.</span></li><li><b>Автоматические отчёты</b><span>Итоги за день и месяц, графики, кто сколько должен.</span></li><li><b>Смены и группы</b><span>Заказы по сменам, классам, офисам или адресам.</span></li><li><b>Напоминания</b><span>Напоминает клиентам заказать до закрытия приёма.</span></li></ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Кому подходит</h2></div>
+    <div class="who"><span>Школы</span><span>Столовые</span><span>Кейтеринг</span><span>Обеды в офис</span><span>Домашние кухни</span><span>Доставка еды</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Стоимость</h2></div>
+    <div class="prices"><div class="row"><div><b>Бот заказов с Google Таблицей</b><small>заказы, оплаты, чеки, отчёты</small></div><div class="p">от $300</div></div><div class="row"><div><b>Поддержка и доработки</b><small>новые правила меню, отчёты, помощь</small></div><div class="p">от $20/мес</div></div></div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <div class="sec-head"><h2>Вопросы</h2></div>
+    <details><summary>Этот бот уже работает в реальной жизни?</summary><p>Да. Он начался как бот заказа школьных обедов, которым родители пользуются каждый день.</p></details><details><summary>Подойдёт ли он для офиса или доставки, а не школы?</summary><p>Да. Смены, классы или офисы — это просто группы, настрою под ваш случай.</p></details><details><summary>Можно ли платить онлайн?</summary><p>Чеки и предоплата работают уже сейчас, онлайн-оплату можно добавить для вашей страны.</p></details><details><summary>Сколько времени занимает запуск?</summary><p>Обычно от 48 часов до нескольких дней, в зависимости от меню и отчётов.</p></details>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><h2>Другие решения</h2></div>
+    <div class="more-links"><a href="/ru/kassa-dlya-kafe/">Касса для кафе<span>заказы, кухня, касса, отчёты</span></a><a href="/ru/bot-dlya-zapisi/">Бот для записи клиентов<span>запись, подтверждение, напоминания</span></a><a href="/ru/#bots">Решения →<span>все боты и разработка под задачу</span></a></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta">
+      <h2>Обсудим ваш бизнес</h2>
+      <p>Напишите в Telegram пару слов о задаче. Отвечаю быстро и покажу, как это будет работать у вас.</p>
+      <a class="btn btn-main" href="https://t.me/abdullah_shatlyk">Написать в Telegram</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links"><a href="/ru/kassa-dlya-kafe/">Касса для кафе</a><a href="/ru/bot-dlya-zapisi/">Бот для записи клиентов</a><a href="/ru/bot-dlya-zakazov/">Бот для заказов еды</a><a href="/cafe.html#ru">Демо кассы</a></div>
+    © 2026 Абдулла · автоматизация для малого бизнеса
+  </div>
+</footer>
+
+</body>
+</html>
