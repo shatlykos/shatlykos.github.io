@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://shatlykos.github.io/sitemap.xml
+Sitemap: https://abdullab.com/sitemap.xml
