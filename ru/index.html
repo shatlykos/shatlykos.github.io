@@ -103,6 +103,10 @@ nav a{text-decoration:none;color:var(--muted);font-weight:600;margin-left:20px;f
 .feature h3{font-size:30px}
 .feature .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
 .feature .actions .btn{padding:12px 18px;font-size:15px}
+.demo-video{grid-column:1/-1;margin:0}
+.demo-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:16px;border:1px solid var(--line);background:#f4f2ec}
+.demo-video figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 14px;margin-top:10px;font-size:14px;color:var(--muted)}
+.demo-video figcaption a{color:var(--accent);font-weight:700;text-decoration:none;white-space:nowrap}
 .feature .left{display:flex;flex-direction:column;min-width:0}
 .flow{list-style:none;display:grid;gap:0;align-content:start;align-self:start;background:var(--bg);border-radius:18px;padding:18px}
 .card .flow li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;position:relative;padding:0 0 18px;margin:0;font-size:15px}
@@ -260,6 +264,11 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
           <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2"/></svg></span><div><b>Касса</b><span>Видит, кто просит счёт, закрывает стол: наличные, карта или перевод</span></div></li>
           <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"/><path d="M4 20h14"/></svg></span><div><b>Владелец</b><span>Вечером получает выручку, отмены и топ блюд — в Telegram и в таблице</span></div></li>
         </ol>
+        <figure class="demo-video">
+          <video autoplay muted loop playsinline preload="metadata" width="1280" height="720" poster="/assets/cafe-demo-ru.jpg" aria-label="Демо кассы для кафе: заказ идёт от официанта на кухню и в бар, потом в кассу и в отчёт владельцу"><source src="/assets/cafe-demo-ru.mp4" type="video/mp4"></video>
+          <figcaption><span>Настоящее демо: официант → кухня и бар → касса → вечерний отчёт владельцу</span><a href="../cafe.html#ru">Нажать самому →</a></figcaption>
+        </figure>
+        <script>if(matchMedia("(prefers-reduced-motion: reduce)").matches){const v=document.querySelector(".demo-video video");v.removeAttribute("autoplay");v.pause();v.controls=true}</script>
       </article>
 
       <article class="card">
