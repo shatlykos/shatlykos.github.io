@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Abdullab — автоматизация бизнес-процессов для вашей компании</title>
-<link rel="icon" href="../favicon.ico?v=3" sizes="32x32">
-<link rel="icon" href="../assets/favicon.svg?v=3" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=3">
+<link rel="icon" href="../favicon.ico?v=4" sizes="32x32">
+<link rel="icon" href="../assets/icon-256.png?v=4" type="image/png" sizes="256x256">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png?v=4">
 <meta name="description" content="Перевожу бизнес-процессы на автопилот: заказы, запись, оплаты, отчёты и работа команды идут сами, круглосуточно. Быстрый запуск под ключ. Русский, грузинский, английский.">
 <link rel="canonical" href="https://abdullab.com/ru/">
 <link rel="alternate" hreflang="ru" href="https://abdullab.com/ru/">
@@ -17,7 +17,7 @@
 <meta property="og:title" content="Abdullab — автоматизация бизнес-процессов для вашей компании">
 <meta property="og:description" content="Перевожу бизнес-процессы на автопилот: заказы, запись, оплаты, отчёты и работа команды идут сами, круглосуточно. Быстрый запуск под ключ. Русский, грузинский, английский.">
 <meta property="og:url" content="https://abdullab.com/ru/">
-<meta property="og:image" content="https://abdullab.com/assets/og-image.png?v=1">
+<meta property="og:image" content="https://abdullab.com/assets/og-image.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Abdullab — automation, innovation, growth">
@@ -26,7 +26,7 @@
 <script src="/analytics.js" defer></script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Abdullab", "description": "Перевожу бизнес-процессы на автопилот: заказы, запись, оплаты, отчёты и работа команды идут сами, круглосуточно. Быстрый запуск под ключ. Русский, грузинский, английский.", "url": "https://abdullab.com/ru/", "areaServed": ["GE", "Worldwide"], "knowsLanguage": ["ru", "en", "ka"], "sameAs": ["https://t.me/abdullah_shatlyk"], "founder": {"@type": "Person", "name": "Абдулла"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:wght@400;500;600;700&family=Lexend:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f6f4ef; --surface:#ffffff; --ink:#16181d; --muted:#5d6370;
@@ -59,9 +59,11 @@ h1,h2{text-transform:uppercase}
 /* header */
 header{padding:20px 0}
 header .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.logo{display:inline-flex;align-items:center;font-family:Lexend,sans-serif;font-weight:600;font-size:20px;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;color:var(--ink)}
-.logo img{width:30px;height:30px;display:block;margin-right:10px}
-.logo span{color:var(--accent)}
+.logo{display:inline-flex;align-items:center;text-decoration:none}
+.logo img{height:28px;width:auto;display:block}
+.logo .lg-d{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo .lg-l{display:none}:root:not([data-theme="light"]) .logo .lg-d{display:block}}
+:root[data-theme="dark"] .logo .lg-l{display:none}:root[data-theme="dark"] .logo .lg-d{display:block}
 nav a{text-decoration:none;color:var(--muted);font-weight:600;margin-left:20px;font-size:15px}
 @media(max-width:640px){nav a:not(.nav-cta):not(.lang){display:none}}
 .lang{border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px!important;color:var(--ink)!important}
@@ -185,7 +187,7 @@ footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
 
 <header>
   <div class="wrap">
-    <a class="logo" href="./" aria-label="Abdullab"><img src="/assets/logo-mark.svg" alt="" width="30" height="30">abdul<span>lab</span></a>
+    <a class="logo" href="./" ><img class="lg-l" src="/assets/logo-light.png?v=4" alt="Abdullab" width="188" height="28"><img class="lg-d" src="/assets/logo.png?v=4" alt="Abdullab" width="188" height="28"></a>
     <nav>
       <a href="#bots">Решения</a>
       <a href="#how">Как работаю</a>

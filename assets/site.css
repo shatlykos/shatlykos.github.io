@@ -29,9 +29,11 @@ h1,h2{text-transform:uppercase}
 /* header */
 header{padding:20px 0}
 header .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.logo{display:inline-flex;align-items:center;font-family:Lexend,sans-serif;font-weight:600;font-size:20px;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;color:var(--ink)}
-.logo img{width:30px;height:30px;display:block;margin-right:10px}
-.logo span{color:var(--accent)}
+.logo{display:inline-flex;align-items:center;text-decoration:none}
+.logo img{height:28px;width:auto;display:block}
+.logo .lg-d{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo .lg-l{display:none}:root:not([data-theme="light"]) .logo .lg-d{display:block}}
+:root[data-theme="dark"] .logo .lg-l{display:none}:root[data-theme="dark"] .logo .lg-d{display:block}
 nav a{text-decoration:none;color:var(--muted);font-weight:600;margin-left:20px;font-size:15px}
 @media(max-width:640px){nav a:not(.nav-cta):not(.lang){display:none}}
 .lang{border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px!important;color:var(--ink)!important}
